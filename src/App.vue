@@ -1,18 +1,17 @@
 <script setup>
-// import Tabbar from '@/components/tabbar/Tabbar'
 // import Tabbar from '@/components/tabbar/Tabbar.vue'
-import Tabbar2 from '@/components/tabbar/Tabbar2.vue'
+import TabbarVant from '@/components/tabbar/TabbarVant.vue'
+import { useRoute } from 'vue-router'
+
+const route = useRoute()
 </script>
 
 <template>
   <div class="app">
     <router-view />
-    <!-- <router-link to="/home">首页</router-link>
-    <router-link to="/favor">收藏</router-link>
-    <router-link to="/order">订单</router-link>
-    <router-link to="/message">消息</router-link> -->
     
-    <Tabbar2 />
+    <!-- <tabbar-vant v-if="!route.meta.hideTabBar" /> -->
+    <tabbar-vant />
   </div>
 </template>
 

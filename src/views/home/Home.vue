@@ -1,24 +1,31 @@
 <script setup>
-import { ref } from 'vue'
-const rateValue = ref(0)
+// import { ref } from "vue";
 
-const rateIncrement = () => {
-  rateValue.value++
-}
+import HomeNavBar from './child/navbar/HomeNavBar.vue';
+import HomeSearchBox from './child/HomeSearchBox.vue';
 </script>
 
 <template>
-  <div class="home">
-    <h2>home</h2>
-    <van-button type="primary">主要按钮</van-button>
-    <van-button type="success">成功按钮</van-button>
-    <van-button type="default">默认按钮</van-button>
-    <van-button type="warning">警告按钮</van-button>
-    <van-button type="danger">危险按钮</van-button>
-    <van-rate v-model="rateValue" :size="30" color="#fab"/>
-    <button @click="rateIncrement" >rateIncrement</button>
+  <div class="home"> 
+    <!-- <van-nav-bar title="旅途" />   -->
+    <home-nav-bar />
 
+    <div class="banner">
+      <img src="@/assets/img/home/banner.webp" alt="">
+    </div>
+
+    <home-search-box />
   </div>
 </template>
 
-<style scoped lang="less"></style>
+<style scoped lang="less">
+.home{
+  .banner {
+    img {
+      width: 100%;
+    }
+  }
+
+  
+}
+</style>
