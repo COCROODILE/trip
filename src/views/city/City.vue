@@ -83,6 +83,10 @@ console.log(allCities.value);
   //   margin-top: 98px;
   // }
 
+  .top{
+    position: relative;
+    z-index: 9;
+  }
   .content {
     height: calc(100vh - 98px);
     overflow-y: auto;
