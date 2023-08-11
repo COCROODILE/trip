@@ -1,7 +1,9 @@
 <script setup>
+import { useRoute } from 'vue-router'
+
 // import Tabbar from '@/components/tabbar/Tabbar.vue'
 import TabbarVant from '@/components/tabbar/TabbarVant.vue'
-import { useRoute } from 'vue-router'
+import Loading from '@/components/loading/Loading.vue'
 
 const route = useRoute()
 </script>
@@ -10,8 +12,9 @@ const route = useRoute()
   <div class="app">
     <router-view />
     
-    <!-- <tabbar-vant v-if="!route.meta.hideTabBar" /> -->
-    <tabbar-vant />
+    <tabbar-vant v-if="!route.meta.hideTabBar" />
+    <!-- <tabbar-vant /> -->
+    <loading />
   </div>
 </template>
 

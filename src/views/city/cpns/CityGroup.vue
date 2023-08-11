@@ -16,42 +16,37 @@ const props = defineProps({
 
 // 右侧的动态索引列表
 const indexList = computed(() => {
-  const list = props.groupData.cities.map(item => item.group)
-  list.unshift('#')
-  return list
-})
+  const list = props.groupData.cities.map((item) => item.group);
+  list.unshift("#");
+  return list;
+});
 
 // 监听城市的点击
-const cityStore = useCity()
-const router = useRouter()
+const cityStore = useCity();
+const router = useRouter();
 const cityClick = (city) => {
   // 把选择到的city存到store
-  cityStore.currentCity = city
+  cityStore.currentCity = city;
   // 返回上一级
-  router.back()
-}
+  router.back();
+};
 </script>
 
 <template>
   <div class="city-group">
-    <van-index-bar :sticky="false" 
-    :index-list="indexList">
+    <van-index-bar :sticky="false" :index-list="indexList">
       <van-index-anchor index="热门" />
       <div class="list">
-        <template
-          v-for="item in groupData.hotCities"
-          :key="item.cityId"
-        >
+        <template v-for="city in groupData.hotCities" :key="city.cityId">
           <div class="city" @click="cityClick(city)">
-            {{ item.cityName }}</div>
+            {{ city.cityName }}
+          </div>
         </template>
       </div>
 
-      <template v-for="(group, index) in groupData?.cities"
-       :key="index">
+      <template v-for="(group, index) in groupData?.cities" :key="index">
         <van-index-anchor :index="group.group" />
-        <template v-for="(city, indey) in group.cities" 
-        :key="indey">
+        <template v-for="(city, indey) in group.cities" :key="indey">
           <van-cell :title="city.cityName" @click="cityClick(city)" />
         </template>
       </template>
@@ -73,19 +68,19 @@ const cityClick = (city) => {
   --van-index-anchor-font-weight: 400 !important;
   --van-font-bold: 400 !important;
 
-  .list{
+  .list {
     display: flex;
     flex-wrap: wrap;
     padding: 2px 16px;
     justify-content: space-around;
-    .city{
+    .city {
       width: 70px;
       height: 28px;
       line-height: 28px;
       // padding: 2px 4px;
       background-color: var(--primary-color);
       margin: 4px;
-      border-radius:14px;
+      border-radius: 14px;
       font-size: 12px;
       color: #fff;
       text-align: center;

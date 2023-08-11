@@ -32,7 +32,6 @@ const { allCities } = storeToRefs(cityStore);
 // 获取选中标签后的数据
 // 根据key从allCities获取数据，默认直接获取的数据不是响应式的，所以必须包裹computed
 const currentGroup = computed(() => allCities.value[tabActive.value]);
-console.log(allCities.value);
 </script>
 
 <template>
