@@ -33,6 +33,18 @@ defineProps({
               </div>
             </div>
           </div>
+          <div class="right">
+            <div class="contact">联系房东</div>
+          </div>
+        </div>
+        <div class="bottom">
+          <template v-for="(item, index) in landlord.hotelSummary" :key="index">
+            <div class="item">
+              <div class="title">{{ item.title }}</div>
+              <div class="score">{{ item.introduction }}</div>
+              <div class="desc">{{ item.tip }}</div>
+            </div>
+          </template>
         </div>
       </div>
     </detail-section>
@@ -52,6 +64,70 @@ defineProps({
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    .left{
+      display: flex;
+      align-items: center;
+
+      .avatar{
+        img{
+          width: 54px;
+          height: 54px;
+        }
+      }
+
+      .info{
+        .name{
+          font-weight: 700;
+          font-size: 16px;
+          margin-bottom: 5px;
+        }
+        .tags{
+          display: flex;
+          .item{
+            .divider{
+              padding: 0 5px;
+            }
+          }
+        }
+      }
+    }
+
+    .right{
+      .contact{
+        height: 24px;
+        line-height: 24px;
+        border-radius: 5px;
+        padding: 0 12px;
+        font-size: 12px;
+        color: #fff;
+        background-image: linear-gradient(90deg, #fa8c1d, #fcaf3f);
+      }
+    }
   }
+
+  .bottom{
+    display: flex;
+    justify-content: space-between;
+    margin: 50px 10px 10px;
+
+    .item{
+      font-size: 12px;
+
+      .title{
+        color: #999;
+      }
+
+      .score{
+        font-size: 16px;
+        margin: 5px 0;
+        font-weight: 700;
+      }
+      .desc{
+        color: #333;
+      }
+    }
+  }
+
 }
 </style>
