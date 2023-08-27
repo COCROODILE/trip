@@ -8,6 +8,7 @@ import DetailSwipe from './child/DetailSwipe.vue'
 import DetailInfos from "./child/DetailInfos.vue";
 import DetailFacility from './child/DetailFacility.vue'
 import DetailLandlord from './child/DetailLandlord.vue'
+import DetailComment from "./child/DetailComment.vue";
 
 
 const route = useRoute();
@@ -43,6 +44,7 @@ const mainPart = computed(() => detailInfos.value.mainPart);
       <detail-infos :top-infos="mainPart.topModule" />
       <detail-facility :house-facility="mainPart.dynamicModule.facilityModule.houseFacility" />
       <detail-landlord :landlord="mainPart.dynamicModule.landlordModule"/>
+      <detail-comment :comment="mainPart.dynamicModule.commentModule" />
     </div>
   </div>
 </template>
