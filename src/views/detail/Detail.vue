@@ -10,6 +10,7 @@ import DetailFacility from './child/DetailFacility.vue'
 import DetailLandlord from './child/DetailLandlord.vue'
 import DetailComment from "./child/DetailComment.vue";
 import DetailNotice from "./child/DetailNotice.vue";
+import DetailMap from "./child/DetailMap.vue";
 
 
 const route = useRoute();
@@ -47,6 +48,7 @@ const mainPart = computed(() => detailInfos.value.mainPart);
       <detail-landlord :landlord="mainPart.dynamicModule.landlordModule"/>
       <detail-comment :comment="mainPart.dynamicModule.commentModule" />
       <detail-notice :order-rules="mainPart.dynamicModule.rulesModule.orderRules" />
+      <detail-map :position="mainPart.dynamicModule.positionModule" />
     </div>
   </div>
 </template>
