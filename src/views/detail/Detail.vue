@@ -11,6 +11,7 @@ import DetailLandlord from './child/DetailLandlord.vue'
 import DetailComment from "./child/DetailComment.vue";
 import DetailNotice from "./child/DetailNotice.vue";
 import DetailMap from "./child/DetailMap.vue";
+import DetailIntro from './child/DetailIntro.vue'
 
 
 const route = useRoute();
@@ -49,8 +50,32 @@ const mainPart = computed(() => detailInfos.value.mainPart);
       <detail-comment :comment="mainPart.dynamicModule.commentModule" />
       <detail-notice :order-rules="mainPart.dynamicModule.rulesModule.orderRules" />
       <detail-map :position="mainPart.dynamicModule.positionModule" />
+      <detail-intro :price-intro="mainPart.introductionModule" />
+    </div>
+
+    <div class="footer">
+      <img src="@/assets/img/detail/icon_ensure.png" alt="">
+      <div class="text">弘源旅途，永无止境!</div>
     </div>
   </div>
 </template>
 
-<style scoped lang="less"></style>
+<style scoped lang="less">
+.footer{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 120px;
+
+  img{
+    width: 123px;
+  }
+
+  .text{
+    margin-top: 12px;
+    font-size: 12px;
+    color: #7688a7;
+  }
+}
+</style>
