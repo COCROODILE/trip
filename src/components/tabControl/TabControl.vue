@@ -16,6 +16,10 @@ const tabClick = (index) => {
   currentIndex.value = index;
   emit("tabClick", index);
 };
+
+defineExpose({
+  currentIndex
+})
 </script>
 
 <template>

@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref } from "vue";
+import { computed, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import useDetail from "@/stores/modules/detail";
 import { storeToRefs } from "pinia";
@@ -49,6 +49,7 @@ const showTabControl = computed(() => {
 const sectionEls = ref({})
 const getSectionRef = (ref) => {
   // console.log(ref.$el.getAttribute('name'));
+  if(!ref) return
   const name = ref.$el.getAttribute('name')
   sectionEls.value[name] = ref.$el
 }
@@ -74,6 +75,28 @@ const tabClick = (index) => {
   })
 };
 
+//页面滚动，滚动时匹配对应的tabControl的index
+const tabControlRef = ref()
+watch(scrollTop, (newTop) => {
+  // 1.获取所有的区域的offsetTops
+  const els = Object.values(sectionEls.value)
+  const offsetTops = els.map(el => el.offsetTop)
+  // console.log(offsetTops);
+
+  // 2.根据newTop去匹配想要的index
+  let index = offsetTops.length - 1
+  for(let i = 0; i < offsetTops.length; i++){
+    if(offsetTops[i] > newTop + 44){
+      index = i - 1
+      break;
+    }
+  }
+
+  // console.log(index);
+  // console.log(tabControlRef.value.currentIndex);
+  if(tabControlRef.value.currentIndex !== index) tabControlRef.value?.currentIndex = index
+})
+
 </script>
 
 <template>
@@ -83,6 +106,7 @@ const tabClick = (index) => {
       class="tabs"
       v-show="showTabControl"
       @tabClick="tabClick"
+      ref="tabControlRef"
     />
     <van-nav-bar
       title="房屋详情"
