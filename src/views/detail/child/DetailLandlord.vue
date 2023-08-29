@@ -1,11 +1,11 @@
 <script setup>
-import DetailSection from '@/components/detailSection/DetailSection.vue'
+import DetailSection from "@/components/detailSection/DetailSection.vue";
 defineProps({
-  landlord:{
-    type:Object,
-    default:() => ({})
-  }
-})
+  landlord: {
+    type: Object,
+    default: () => ({}),
+  },
+});
 </script>
 
 <template>
@@ -13,21 +13,27 @@ defineProps({
     <detail-section title="房东介绍" more-text="查看房东介绍">
       <div class="intro">
         <div class="top">
-          <img :src="landlord?.topScroll" alt="">
+          <img :src="landlord?.topScroll" alt="" />
         </div>
         <div class="header">
           <div class="left">
             <div class="avatar">
-              <img :src="landlord?.hotelLogo" alt="">
+              <img :src="landlord?.hotelLogo" alt="" />
             </div>
             <div class="info">
               <div class="name">{{ landlord.hotelName }}</div>
               <div class="tags">
-                <template v-for="(item, index) in landlord.hotelTags" :key="index">
+                <template
+                  v-for="(item, index) in landlord.hotelTags"
+                  :key="index"
+                >
                   <div class="item" :style="{ color: item.tagText.color }">
                     <span>{{ item.tagText.text }}</span>
-                    <span v-if="index !== landlord.hotelTags.length - 1"
-                     class="divider">|</span>
+                    <span
+                      v-if="index !== landlord.hotelTags.length - 1"
+                      class="divider"
+                      >|</span
+                    >
                   </div>
                 </template>
               </div>
@@ -52,40 +58,46 @@ defineProps({
 </template>
 
 <style scoped lang="less">
-.intro{
-  .top{
-    img{
+.intro {
+  .top {
+    img {
       width: 100%;
       border-radius: 3px;
     }
   }
 
-  .header{
+  .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-top: 5px;
 
-    .left{
+    .left {
       display: flex;
       align-items: center;
 
-      .avatar{
-        img{
-          width: 54px;
-          height: 54px;
+      .avatar {
+        width: 54px;
+        height: 54px;
+        border-radius: 50%;
+        overflow: hidden;
+        margin-right: 10px;
+        img {
+          width: 100%;
+          height: 100%;
         }
       }
 
-      .info{
-        .name{
+      .info {
+        .name {
           font-weight: 700;
           font-size: 16px;
           margin-bottom: 5px;
         }
-        .tags{
+        .tags {
           display: flex;
-          .item{
-            .divider{
+          .item {
+            .divider {
               padding: 0 5px;
             }
           }
@@ -93,8 +105,8 @@ defineProps({
       }
     }
 
-    .right{
-      .contact{
+    .right {
+      .contact {
         height: 24px;
         line-height: 24px;
         border-radius: 5px;
@@ -106,28 +118,27 @@ defineProps({
     }
   }
 
-  .bottom{
+  .bottom {
     display: flex;
     justify-content: space-between;
     margin: 50px 10px 10px;
 
-    .item{
+    .item {
       font-size: 12px;
 
-      .title{
+      .title {
         color: #999;
       }
 
-      .score{
+      .score {
         font-size: 16px;
         margin: 5px 0;
         font-weight: 700;
       }
-      .desc{
+      .desc {
         color: #333;
       }
     }
   }
-
 }
 </style>

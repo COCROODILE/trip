@@ -58,6 +58,8 @@ const names = computed(() => {
   return Object.keys(sectionEls.value)
 })
 
+let isClick = false
+let currentDistance = -1
 const tabClick = (index) => {
   // let distance = sectionEls[index].offsetTop
   // if(index !== 0) distance = distance - 44
@@ -66,18 +68,30 @@ const tabClick = (index) => {
   //   behavior: 'smooth'
   // })
 
+
   // console.log(sectionEls.value[names.value[index]].offsetTop);
   let distance = sectionEls.value[names.value[index]].offsetTop
   if(index !== 0) distance = distance - 44
+
+  currentDistance = distance
+  isClick = true
+  
   detailRef.value.scrollTo({
     top: distance,
     behavior: 'smooth'
   })
+
 };
 
 //页面滚动，滚动时匹配对应的tabControl的index
 const tabControlRef = ref()
 watch(scrollTop, (newTop) => {
+  
+  if(newTop === currentDistance) {
+    isClick = false
+  }
+  if(isClick) return
+
   // 1.获取所有的区域的offsetTops
   const els = Object.values(sectionEls.value)
   const offsetTops = els.map(el => el.offsetTop)
@@ -93,8 +107,13 @@ watch(scrollTop, (newTop) => {
   }
 
   // console.log(index);
+  
   // console.log(tabControlRef.value.currentIndex);
-  if(tabControlRef.value.currentIndex !== index) tabControlRef.value?.currentIndex = index
+  tabControlRef.value.currentIndex = index
+
+  // if(tabControlRef.value.currentIndex !== index) {
+    // tabControlRef.value?.currentIndex = index
+  // }
 })
 
 </script>
@@ -117,16 +136,36 @@ watch(scrollTop, (newTop) => {
 
     <div class="main" v-if="mainPart" v-memo="[mainPart]">
       <detail-swipe :swipe-data="mainPart.topModule.housePicture.housePics" />
-      <detail-infos name="描述" :ref="getSectionRef" :top-infos="mainPart.topModule" />
-      <detail-facility name="设施" :ref="getSectionRef"
+      <detail-infos
+        name="描述"
+        :ref="getSectionRef"
+        :top-infos="mainPart.topModule"
+      />
+      <detail-facility
+        name="设施"
+        :ref="getSectionRef"
         :house-facility="mainPart.dynamicModule.facilityModule.houseFacility"
       />
-      <detail-landlord name="房东" :ref="getSectionRef" :landlord="mainPart.dynamicModule.landlordModule" />
-      <detail-comment name="评论" :ref="getSectionRef" :comment="mainPart.dynamicModule.commentModule" />
-      <detail-notice name="须知" :ref="getSectionRef"
+      <detail-landlord
+        name="房东"
+        :ref="getSectionRef"
+        :landlord="mainPart.dynamicModule.landlordModule"
+      />
+      <detail-comment
+        name="评论"
+        :ref="getSectionRef"
+        :comment="mainPart.dynamicModule.commentModule"
+      />
+      <detail-notice
+        name="须知"
+        :ref="getSectionRef"
         :order-rules="mainPart.dynamicModule.rulesModule.orderRules"
       />
-      <detail-map name="周边" :ref="getSectionRef" :position="mainPart.dynamicModule.positionModule" />
+      <detail-map
+        name="周边"
+        :ref="getSectionRef"
+        :position="mainPart.dynamicModule.positionModule"
+      />
       <detail-intro :price-intro="mainPart.introductionModule" />
     </div>
 
@@ -138,28 +177,30 @@ watch(scrollTop, (newTop) => {
 </template>
 
 <style scoped lang="less">
-.tabs {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 9;
-}
-.footer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 120px;
-
-  img {
-    width: 123px;
+.detail {
+  .tabs {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 9;
   }
+  .footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 120px;
 
-  .text {
-    margin-top: 12px;
-    font-size: 12px;
-    color: #7688a7;
+    img {
+      width: 123px;
+    }
+
+    .text {
+      margin-top: 12px;
+      font-size: 12px;
+      color: #7688a7;
+    }
   }
 }
 </style>

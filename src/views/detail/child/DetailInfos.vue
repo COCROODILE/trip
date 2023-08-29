@@ -5,6 +5,9 @@ defineProps({
     default: () => ({}),
   },
 });
+const scoreFormat = (score) => {
+  return Number(score).toFixed(1)
+}
 </script>
 
 <template>
@@ -28,7 +31,7 @@ defineProps({
 
     <div class="comment layout-flex">
       <div class="left">
-        <span class="score">{{ topInfos.commentBrief.overall }}</span>
+        <span class="score">{{ scoreFormat(topInfos.commentBrief.overall) }}</span>
         <span class="title">{{ topInfos.commentBrief.scoreTitle }}</span>
         <span class="brief">{{ topInfos.commentBrief.commentBrief }}</span>
       </div>

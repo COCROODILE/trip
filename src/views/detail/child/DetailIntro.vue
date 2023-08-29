@@ -25,5 +25,10 @@ defineProps({
     font-weight: 700;
     margin-bottom: 10px;
   }
+
+  .content{
+    color: #999;
+    text-align: justify;
+  }
 }
 </style>
