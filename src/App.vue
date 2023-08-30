@@ -16,7 +16,7 @@ const route = useRoute()
       </keep-alive>
     </router-view>
     
-    <tabbar-vant v-if="!route.meta.hideTabBar" />
+    <tabbar-vant v-show="!route.meta.hideTabBar" />
     <!-- <tabbar-vant /> -->
     <loading />
   </div>
