@@ -1,5 +1,5 @@
 <script setup>
-import { watch, computed } from "vue";
+import { watch, computed, ref, onActivated } from "vue";
 import useHome from "@/stores/modules/home";
 
 import HomeNavBar from "./child/navbar/HomeNavBar.vue";
@@ -25,7 +25,9 @@ homeStore.fetchHouseListData();
 //   homeStore.fetchHouseListData()
 // })
 
-const { isReachBottom, scrollTop } = useScroll()
+// 监听滚动到底部
+const homeRef = ref()
+const { isReachBottom, scrollTop } = useScroll(homeRef)
 watch(isReachBottom, (newVal) => {
   if(newVal){
     // 异步：确保数据加载完成后再将isReachBottom赋值为false
@@ -46,10 +48,23 @@ watch(isReachBottom, (newVal) => {
 const isShowSearchBar = computed(() => {
   return scrollTop.value >= 350
 })
+
+// 跳转回home时，保留原来的位置
+onActivated(() => {
+  homeRef.value?.scrollTo({
+    top: scrollTop.value
+  })
+})
+</script>
+
+<script>
+export default {
+  name:'home'
+}
 </script>
 
 <template>
-  <div class="home">
+  <div class="home" ref="homeRef">
     <!-- <van-nav-bar title="旅途" />   -->
     <home-nav-bar />
 
@@ -71,6 +86,9 @@ const isShowSearchBar = computed(() => {
 
 <style scoped lang="less">
 .home {
+  height: 100vh;
+  overflow-y: auto;
+  box-sizing: border-box;
   margin-bottom: 100px;
   .banner {
     img {

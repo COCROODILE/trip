@@ -46,20 +46,20 @@ const showTabControl = computed(() => {
 //   sectionEls.push(ref.$el)
 // }
 
-const sectionEls = ref({})
+const sectionEls = ref({});
 const getSectionRef = (ref) => {
   // console.log(ref.$el.getAttribute('name'));
-  if(!ref) return
-  const name = ref.$el.getAttribute('name')
-  sectionEls.value[name] = ref.$el
-}
+  if (!ref) return;
+  const name = ref.$el.getAttribute("name");
+  sectionEls.value[name] = ref.$el;
+};
 
 const names = computed(() => {
-  return Object.keys(sectionEls.value)
-})
+  return Object.keys(sectionEls.value);
+});
 
-let isClick = false
-let currentDistance = -1
+let isClick = false;
+let currentDistance = -1;
 const tabClick = (index) => {
   // let distance = sectionEls[index].offsetTop
   // if(index !== 0) distance = distance - 44
@@ -68,54 +68,50 @@ const tabClick = (index) => {
   //   behavior: 'smooth'
   // })
 
-
   // console.log(sectionEls.value[names.value[index]].offsetTop);
-  let distance = sectionEls.value[names.value[index]].offsetTop
-  if(index !== 0) distance = distance - 44
+  let distance = sectionEls.value[names.value[index]].offsetTop;
+  if (index !== 0) distance = distance - 44;
 
-  currentDistance = distance
-  isClick = true
-  
+  currentDistance = distance;
+  isClick = true;
+
   detailRef.value.scrollTo({
     top: distance,
-    behavior: 'smooth'
-  })
-
+    behavior: "smooth",
+  });
 };
 
 //页面滚动，滚动时匹配对应的tabControl的index
-const tabControlRef = ref()
+const tabControlRef = ref();
 watch(scrollTop, (newTop) => {
-  
-  if(newTop === currentDistance) {
-    isClick = false
+  if (newTop === currentDistance) {
+    isClick = false;
   }
-  if(isClick) return
+  if (isClick) return;
 
   // 1.获取所有的区域的offsetTops
-  const els = Object.values(sectionEls.value)
-  const offsetTops = els.map(el => el.offsetTop)
+  const els = Object.values(sectionEls.value);
+  const offsetTops = els.map((el) => el.offsetTop);
   // console.log(offsetTops);
 
   // 2.根据newTop去匹配想要的index
-  let index = offsetTops.length - 1
-  for(let i = 0; i < offsetTops.length; i++){
-    if(offsetTops[i] > newTop + 44){
-      index = i - 1
+  let index = offsetTops.length - 1;
+  for (let i = 0; i < offsetTops.length; i++) {
+    if (offsetTops[i] > newTop + 44) {
+      index = i - 1;
       break;
     }
   }
 
   // console.log(index);
-  
+
   // console.log(tabControlRef.value.currentIndex);
-  tabControlRef.value.currentIndex = index
 
-  // if(tabControlRef.value.currentIndex !== index) {
+  if (tabControlRef.value.currentIndex !== index) {
     // tabControlRef.value?.currentIndex = index
-  // }
-})
-
+    tabControlRef.value.currentIndex = index;
+  }
+});
 </script>
 
 <template>
