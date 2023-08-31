@@ -1,33 +1,70 @@
 <script setup>
-import useMain from "@/stores/modules/main";
-import { formatMonthDay } from "@/utils/format_date";
-import { storeToRefs } from "pinia";
-import { computed } from "vue";
+// import { computed } from "vue";
+// import useMain from "@/stores/modules/main";
+// import { formatMonthDay } from "@/utils/format_date";
+// import { storeToRefs } from "pinia";
 
-const mainStore = useMain()
-const { startDate, endDate } = storeToRefs(mainStore)
-const startDateStr = computed(() => formatMonthDay(startDate.value, "MM.DD"))
-const endDateStr = computed(() => formatMonthDay(endDate.value, "MM.DD"))
+// const mainStore = useMain()
+// const { startDate, endDate } = storeToRefs(mainStore)
+// const startDateStr = computed(() => formatMonthDay(startDate, "MM.DD"))
+// const endDateStr = computed(() => formatMonthDay(endDate, "MM.DD"))
 
+const props = defineProps({
+  title:{
+    type: String,
+    default:''
+  },
+  isHaveSearchBtn:{
+    type: Boolean,
+    default: false
+  },
+  startDate:{
+    type: String,
+    default: '00.00'
+  },
+  endDate:{
+    type: String,
+    default: '00.00'
+  },
+  keyword:{
+    type: String,
+    default: ''
+  }
+})
+
+const emit = defineEmits(['handleSearchClick'])
+
+const handleSearchClick = () => {
+  emit('searchClick')
+}
 </script>
 
 <template>
   <div class="search">
+    <div class="left" v-if="title">
+      <slot name="left">
+        <span>广州</span>
+      </slot>
+    </div>
     <div class="select-time">
       <div class="start">
         <span class="name">住</span>
-        <span class="date">{{ startDateStr }}</span>
+        <span class="date">{{ startDate }}</span>
       </div>
       <div class="end">
         <span class="name">离</span>
-        <span class="date">{{ endDateStr }}</span>
+        <span class="date">{{ endDate }}</span>
       </div>
     </div>
-    <div class="content">
-      <div class="keyword">关键字/位置/民宿</div>
+    <div class="content" @click="handleSearchClick">
+      <slot name="content">
+        <div class="keyword">{{ keyword }}</div>
+      </slot>
     </div>
     <div class="right">
-      <van-icon name="search" size="20" />
+      <slot name="right">
+        <van-icon name="search" size="20"  v-if="isHaveSearchBtn"/>
+      </slot>
     </div>
   </div>
 </template>
@@ -37,16 +74,22 @@ const endDateStr = computed(() => formatMonthDay(endDate.value, "MM.DD"))
   display: flex;
   flex-direction: row;
   align-items: center;
-  height: 45px;
-  line-height: 45px;
+  height: 44px;
+  line-height: 44px;
   padding: 0 10px;
   font-size: 14px;
   color: #999;
   border-radius: 6px;
   background-color: #f2f4f6;
 
+  .date{
+    color: #333;
+    margin-left: 2px;
+    font-size: 12px;
+  }
+
   .left{
-    font-weight: 500;
+    // font-weight: 500;
     min-width: 30px;
     font-size: 14px;
     padding-right: 6px;
@@ -57,6 +100,8 @@ const endDateStr = computed(() => formatMonthDay(endDate.value, "MM.DD"))
 
   .select-time{
     margin-right: 5px;
+    padding-right: 5px;
+    border-right: 1px solid #fff;
     .start, .end{
       // display: flex;
       height: 16px;

@@ -1,15 +1,68 @@
 <script setup>
+import { computed } from "vue";
+import { useRoute, useRouter } from "vue-router";
 
+import { formatMonthDay } from "@/utils/format_date";
+
+import SearchBar from "@/components/searchBar/SearchBar.vue";
+import DropDownSelect from '@/components/dropdownSelect/DropDownSelect.vue'
+
+import useSearch from '@/stores/modules/search'
+import { storeToRefs } from "pinia";
+
+const route = useRoute();
+const startDate = route.query.startDate;
+const endDate = route.query.endDate;
+const currentCity = route.query.currentCity;
+
+const startDateStr = computed(() => formatMonthDay(startDate.value, "MM.DD"));
+const endDateStr = computed(() => formatMonthDay(endDate.value, "MM.DD"));
+
+const router = useRouter();
+const onClickLeft = () => {
+  router.back();
+};
+
+const searchStore = useSearch()
+searchStore.fetchSearchConditionsData()
+const { searchConditions } = storeToRefs(searchStore)
+// console.log(searchConditions.value);
 </script>
 
 <template>
   <div class="search">
-    <h2>开始时间：{{ $route.query.startDate }}</h2>
-    <h2>结束时间：{{ $route.query.endDate }}</h2>
-    <h2>当前城市：{{ $route.query.currentCity }}</h2>
+    <van-nav-bar left-arrow @click-left="onClickLeft">
+      <template #title>
+        <search-bar
+          :keyword="`搜索${currentCity}的景点`"
+          class="search-content"
+          :start-date="startDateStr"
+          :end-date="endDateStr"
+          title="currentCity"
+        ></search-bar>
+      </template>
+      <template #right>
+        <van-icon name="wap-nav" size="24" />
+      </template>
+    </van-nav-bar>
+
+    <drop-down-select :items-data="searchConditions" />
   </div>
 </template>
 
 <style scoped lang="less">
+.search {
+  --van-nav-bar-arrow-size: 24px;
 
+  :deep(.van-nav-bar__title) {
+    flex: 1;
+    font-weight: 400;
+    max-width: 76% !important;
+  }
+
+  .search-content {
+    margin: 0 10px;
+    height: 36px;
+  }
+}
 </style>

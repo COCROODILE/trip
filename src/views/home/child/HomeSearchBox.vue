@@ -7,11 +7,18 @@ import useHome from "@/stores/modules/home";
 import useMain from "@/stores/modules/main";
 import { formatMonthDay, getDiffDays } from "@/utils/format_date";
 
+// 回显选择的城市
+const cityStore = useCity();
+const { currentCity } = storeToRefs(cityStore);
+
 // 获取位置
 const positionClick = () => {
   navigator.geolocation.getCurrentPosition(
     (res) => {
       console.log("获取位置成功", res);
+      const latitude = res.coords.latitude; //十进制纬度
+      const longitude = res.coords.longitude; //十进制经度
+      // currentCity.value.cityName = res.coords
     },
     (err) => {
       console.log("获取位置失败", err);
@@ -25,19 +32,15 @@ const cityClick = () => {
   router.push("/city");
 };
 
-// 回显选择的城市
-const cityStore = useCity();
-const { currentCity } = storeToRefs(cityStore);
-
 // 日期范围
-const mainStore= useMain()
-const { startDate, endDate } = storeToRefs(mainStore)
+const mainStore = useMain();
+const { startDate, endDate } = storeToRefs(mainStore);
 
 //获取好时间后再进行格式化
-const startDateStr = computed(() => formatMonthDay(startDate.value))
-const endDateStr = computed(() => formatMonthDay(endDate.value))
+const startDateStr = computed(() => formatMonthDay(startDate.value));
+const endDateStr = computed(() => formatMonthDay(endDate.value));
 
-const stayCount = ref(getDiffDays(startDate.value, endDate.value))
+const stayCount = ref(getDiffDays(startDate.value, endDate.value));
 
 const showCalendar = ref(false);
 const calendarClick = () => {
@@ -45,13 +48,13 @@ const calendarClick = () => {
 };
 const onConfirm = (values) => {
   const [start, end] = values;
-  startDate.value = start
-  endDate.value = end
-  stayCount.value = getDiffDays(start, end)
+  startDate.value = start;
+  endDate.value = end;
+  stayCount.value = getDiffDays(start, end);
   // console.log(`${start} - ${end}`)
   // 隐藏日历
   showCalendar.value = false;
-}
+};
 
 // 热门建议
 const homeStore = useHome();
@@ -59,15 +62,18 @@ const { hotSuggest } = storeToRefs(homeStore);
 
 const searchBtnClick = () => {
   router.push({
-    path:"/search",
-    query:{
+    path: "/search",
+    query: {
       startDate: startDate.value,
       endDate: endDate.value,
-      currentCity: currentCity.value.cityName
-    }
+      currentCity: currentCity.value.cityName,
+    },
   });
+};
 
-}
+defineExpose({
+  searchBtnClick
+})
 </script>
 
 <template>
@@ -189,11 +195,11 @@ const searchBtnClick = () => {
     color: #333;
   }
 
-  .hot-suggest{
+  .hot-suggest {
     display: flex;
     flex-wrap: wrap;
     margin: 20px 0;
-    .text{
+    .text {
       font-size: 12px;
       margin: 3px 5px;
       padding: 4px 8px;
@@ -201,8 +207,8 @@ const searchBtnClick = () => {
     }
   }
 
-  .search-btn{
-    .btn{
+  .search-btn {
+    .btn {
       width: 342px;
       height: 38px;
       max-height: 50px;

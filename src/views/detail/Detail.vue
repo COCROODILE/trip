@@ -15,6 +15,7 @@ import DetailComment from "./child/DetailComment.vue";
 import DetailNotice from "./child/DetailNotice.vue";
 import DetailMap from "./child/DetailMap.vue";
 import DetailIntro from "./child/DetailIntro.vue";
+import DetailActionBar from "./child/DetailActionBar.vue";
 
 const route = useRoute();
 
@@ -169,6 +170,8 @@ watch(scrollTop, (newTop) => {
       <img src="@/assets/img/detail/icon_ensure.png" alt="" />
       <div class="text">弘源旅途，永无止境!</div>
     </div>
+
+    <detail-action-bar :current-house="detailInfos.currentHouse"/>
   </div>
 </template>
 
@@ -187,6 +190,7 @@ watch(scrollTop, (newTop) => {
     align-items: center;
     justify-content: center;
     height: 120px;
+    margin-bottom: 49px;
 
     img {
       width: 123px;
