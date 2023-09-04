@@ -14,6 +14,11 @@ const subActive = ref(0);
 const onChange = (index) => {
   console.log(`标签名 ${index + 1}`)
 };
+
+let currentSubIndex = ref(0)
+const subItemClick = (index) => {
+  currentSubIndex.value = index
+}
 </script>
 
 <template>
@@ -50,11 +55,12 @@ const onChange = (index) => {
 
           <div class="secondary-content">
             <template
-              v-for="(group, index) in sideDatas[active].subGroups[subActive]
-                .items"
+              v-for="(group, index) in sideDatas[active].subGroups[subActive]?.items"
               :key="index"
             >
-              <div class="list-item">
+              <div class="list-item"
+              :class="{ 'active': currentSubIndex === index }" 
+              @click="subItemClick(index)">
                 <div class="name">{{ group.label }}</div>
               </div>
             </template>
@@ -74,6 +80,7 @@ const onChange = (index) => {
 
 .side-bar {
   display: flex;
+  height: calc(@popupHeight - 60px);
   // overflow-y: auto;
 
   .content {
@@ -86,11 +93,12 @@ const onChange = (index) => {
       flex-direction: column;
       justify-content: center;
       height: 55px;
-      margin-left: 20px;
+      // margin-left: 20px;
       padding: 2px 0;
 
       .name {
         margin-bottom: 6px;
+        padding-left: 20px;
       }
 
       .desp {
@@ -102,6 +110,20 @@ const onChange = (index) => {
     .sub-side-panel {
       display: flex;
     }
+
+    .secondary-content{
+      flex: 1;
+      // overflow-x: hidden;
+      overflow-y: scroll;
+      height: calc(@popupHeight - 60px);
+    }
+  }
+}
+
+.active{
+  background: #fffcf5;
+  .name{
+    color: var(--primary-color);
   }
 }
 </style>

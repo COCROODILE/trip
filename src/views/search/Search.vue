@@ -6,6 +6,8 @@ import { formatMonthDay } from "@/utils/format_date";
 
 import SearchBar from "@/components/searchBar/SearchBar.vue";
 import DropDownSelect from '@/components/dropdownSelect/DropDownSelect.vue'
+import TabSelect from "@/components/tabSelect/TabSelect.vue";
+import SearchListItem from "@/components/searchListItem/SearchListItem.vue";
 
 import useSearch from '@/stores/modules/search'
 import { storeToRefs } from "pinia";
@@ -23,14 +25,18 @@ const onClickLeft = () => {
   router.back();
 };
 
+// 进行网络请求
 const searchStore = useSearch()
 searchStore.fetchSearchConditionsData()
-const { searchConditions } = storeToRefs(searchStore)
+searchStore.fetchSearchHouseData()
+
+const { searchConditions, searchHouse } = storeToRefs(searchStore)
 // console.log(searchConditions.value);
 </script>
 
 <template>
   <div class="search">
+    <!-- 导航栏 -->
     <van-nav-bar left-arrow @click-left="onClickLeft">
       <template #title>
         <search-bar
@@ -46,7 +52,19 @@ const { searchConditions } = storeToRefs(searchStore)
       </template>
     </van-nav-bar>
 
+    <!-- 位置 - 欢迎度排序 - 筛选 -->
     <drop-down-select :items-data="searchConditions" />
+
+    <!-- 优惠 - 多人入住 - 复式loft -->
+    <div class="tab-wrapper">
+      <tab-select :hot-filters="searchHouse.hotFilters" />
+    </div>
+
+    <div class="list">
+      <template v-for="(item, index) in searchHouse.items" :key="index">
+        <search-list-item :item-data="item" />
+      </template>
+    </div>
   </div>
 </template>
 
@@ -63,6 +81,15 @@ const { searchConditions } = storeToRefs(searchStore)
   .search-content {
     margin: 0 10px;
     height: 36px;
+  }
+
+  .tab-wrapper{
+    padding: 12px 0 10px 20px;
+    background-color: #f7f8fb;
+  }
+
+  .list{
+    padding: 0 20px;
   }
 }
 </style>
