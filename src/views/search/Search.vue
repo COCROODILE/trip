@@ -5,11 +5,11 @@ import { useRoute, useRouter } from "vue-router";
 import { formatMonthDay } from "@/utils/format_date";
 
 import SearchBar from "@/components/searchBar/SearchBar.vue";
-import DropDownSelect from '@/components/dropdownSelect/DropDownSelect.vue'
+import DropDownSelect from "@/components/dropdownSelect/DropDownSelect.vue";
 import TabSelect from "@/components/tabSelect/TabSelect.vue";
 import SearchListItem from "@/components/searchListItem/SearchListItem.vue";
 
-import useSearch from '@/stores/modules/search'
+import useSearch from "@/stores/modules/search";
 import { storeToRefs } from "pinia";
 
 const route = useRoute();
@@ -17,47 +17,49 @@ const startDate = route.query.startDate;
 const endDate = route.query.endDate;
 const currentCity = route.query.currentCity;
 
-const startDateStr = computed(() => formatMonthDay(startDate.value, "MM.DD"));
-const endDateStr = computed(() => formatMonthDay(endDate.value, "MM.DD"));
-
+const startDateStr = computed(() => formatMonthDay(startDate, "MM.DD"));
+const endDateStr = computed(() => formatMonthDay(endDate, "MM.DD"));
 const router = useRouter();
 const onClickLeft = () => {
   router.back();
+  console.log('----');
 };
 
 // 进行网络请求
-const searchStore = useSearch()
-searchStore.fetchSearchConditionsData()
-searchStore.fetchSearchHouseData()
+const searchStore = useSearch();
+searchStore.fetchSearchConditionsData();
+searchStore.fetchSearchHouseData();
 
-const { searchConditions, searchHouse } = storeToRefs(searchStore)
+const { searchConditions, searchHouse } = storeToRefs(searchStore);
 // console.log(searchConditions.value);
 </script>
 
 <template>
   <div class="search">
-    <!-- 导航栏 -->
-    <van-nav-bar left-arrow @click-left="onClickLeft">
-      <template #title>
-        <search-bar
-          :keyword="`搜索${currentCity}的景点`"
-          class="search-content"
-          :start-date="startDateStr"
-          :end-date="endDateStr"
-          title="currentCity"
-        ></search-bar>
-      </template>
-      <template #right>
-        <van-icon name="wap-nav" size="24" />
-      </template>
-    </van-nav-bar>
+    <div class="search-nav-bar">
+      <!-- 导航栏 -->
+      <van-nav-bar left-arrow @click-left="onClickLeft">
+        <template #title>
+          <search-bar
+            :keyword="`搜索${currentCity}的景点`"
+            class="search-content"
+            :start-date="startDateStr"
+            :end-date="endDateStr"
+            title="currentCity"
+          ></search-bar>
+        </template>
+        <template #right>
+          <van-icon name="wap-nav" size="24" />
+        </template>
+      </van-nav-bar>
 
-    <!-- 位置 - 欢迎度排序 - 筛选 -->
-    <drop-down-select :items-data="searchConditions" />
+      <!-- 位置 - 欢迎度排序 - 筛选 -->
+      <drop-down-select :items-data="searchConditions" />
 
-    <!-- 优惠 - 多人入住 - 复式loft -->
-    <div class="tab-wrapper">
-      <tab-select :hot-filters="searchHouse.hotFilters" />
+      <!-- 优惠 - 多人入住 - 复式loft -->
+      <div class="tab-wrapper">
+        <tab-select :hot-filters="searchHouse.hotFilters" />
+      </div>
     </div>
 
     <div class="list">
@@ -78,18 +80,26 @@ const { searchConditions, searchHouse } = storeToRefs(searchStore)
     max-width: 76% !important;
   }
 
-  .search-content {
-    margin: 0 10px;
-    height: 36px;
+  .search-nav-bar{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 9;
+    background-color: #fff;
+
+    .tab-wrapper{
+      padding: 12px 0 10px 20px;
+      background-color: #f7f8fb;
+    }
   }
 
-  .tab-wrapper{
-    padding: 12px 0 10px 20px;
-    background-color: #f7f8fb;
-  }
-
-  .list{
+  .list {
     padding: 0 20px;
+    position: relative;
+    top: 120px;
+    height: calc(100vh - 120px);
+    overflow-y: scroll;
   }
 }
 </style>

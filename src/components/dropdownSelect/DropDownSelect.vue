@@ -92,7 +92,11 @@ const handleViewClick = (title) => {
   --van-sidebar-padding: 18px;
   --van-dropdown-menu-content-max-height: 100%;
 
+  background-color: #fff;
   overflow-y: hidden;
+  // box-shadow: 0 1px 1px #ccc,
+  //             0 2px 2px #dfdfdf,
+  //             0 3px 3px #f2f3f5;
   :deep(.van-sidebar-item--select:before) {
     width: 5px;
     height: 5px;

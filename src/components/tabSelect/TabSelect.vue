@@ -33,9 +33,11 @@ const currentIndex = ref(0);
 const handleTagClick = (item, index) => {
   currentIndex.value = index;
 };
+
+const currentSubIndex = ref(0)
 // 二级tab的点击
 const handleSubTagClick = (item, index) => {
-  
+  currentSubIndex.value = index
 }
 </script>
 
@@ -66,7 +68,7 @@ const handleSubTagClick = (item, index) => {
         v-else
         :label="item.label"
         @tagClick="handleTagClick(item, index)"
-        :class="{ active: currentIndex === index }"
+        :active="currentIndex === index"
       />
     </template>
   </div>
@@ -84,9 +86,9 @@ const handleSubTagClick = (item, index) => {
 :global(.tab-select .van-dropdown-menu) {
   display: inline-block;
 }
-:global(.tab-select .van-dropdown-menu .van-dropdown-item--down) {
-  top: 140px !important;
-}
+// :global(.tab-select .van-dropdown-menu .van-dropdown-item--down) {
+//   top: 140px !important;
+// }
 :global(.tab-select .van-dropdown-menu .van-dropdown-item__content) {
   // background-color: #f7f8fb;
   background-color: white;

@@ -11,15 +11,15 @@ defineProps({
   <div class="search-list-item">
     <div class="swiper-wrapper">
       <!-- 图片 -->
-      <img :src="itemData.defaultPicture" class="banner" alt="" />
+      <img :src="itemData?.defaultPicture" class="banner" alt="" />
 
       <div class="bottom">
         <div class="msg-tip">
           <strong class="score"
-            >{{ itemData.commentBriefForCD.overall }}分</strong
+            >{{ itemData?.commentBriefForCD.overall }}分</strong
           >
           <div class="answer">
-            {{ itemData.commentBriefForCD.commentBrief }}
+            {{ itemData?.commentBriefForCD.commentBrief }}
           </div>
         </div>
       </div>
@@ -27,14 +27,14 @@ defineProps({
       <!-- 侧边栏 -->
       <div class="side-bar">
         <div class="tool-bar">
-          <img :src="itemData.logoUrl" class="avatar" alt="fail" />
+          <img :src="itemData?.logoUrl" class="avatar" alt="fail" />
           <div class="collection">
             <img
               class="img"
               src="../../assets/img/search/tj-mob-ui_unit-item_collected-new.png"
               alt=""
             />
-            <span>{{ itemData.preloadHouse.favoriteCount }}</span>
+            <span>{{ itemData?.preloadHouse?.favoriteCount }}</span>
           </div>
           <div class="comment">
             <img
@@ -42,22 +42,22 @@ defineProps({
               src="../../assets/img/search/tj-mob-ui_unit-item_comment-new.png"
               alt=""
             />
-            <span>{{ itemData.preloadHouse.totalCount }}</span>
+            <span>{{ itemData?.preloadHouse?.totalCount }}</span>
           </div>
         </div>
       </div>
     </div>
     <div class="content">
       <div class="info">
-        <van-tag color="#3f4954" text-color="#fff">{{
+        <span class="info-tag">{{
           itemData.address
-        }}</van-tag>
-        <span class="name">{{ itemData.unitSummeries[0].text }}</span>
-        <span class="desc">{{ itemData.unitSummeries[1].text }}</span>
+        }}</span>
+        <span class="name">{{ itemData?.unitSummeries[0].text }}</span>
+        <span class="desc">{{ itemData?.unitSummeries[1].text }}</span>
       </div>
-      <div class="title">{{ itemData.unitName }}</div>
+      <div class="title">{{ itemData?.unitName }}</div>
       <div class="tags">
-        <template v-for="(tag, index) in itemData.houseTags" :key="index">
+        <template v-for="(tag, index) in itemData?.houseTags" :key="index">
           <van-tag
             :color="tag.background.color"
             :text-color="tag.color"
@@ -67,20 +67,20 @@ defineProps({
         </template>
       </div>
       <div class="price">
-        <span class="real-price">￥{{ itemData.finalPrice }}</span>
-        <span class="old-price">￥{{ itemData.productPrice }}</span>
+        <span class="real-price">￥{{ itemData?.finalPrice }}</span>
+        <span class="old-price">￥{{ itemData?.productPrice }}</span>
         <van-tag
           round
           class="discount"
-          v-if="itemData.priceTipBadge"
+          v-if="itemData?.priceTipBadge"
           color="rgb(251, 74, 74)"
-          :text-color="itemData.priceTipBadge.color"
-          >{{ itemData.priceTipBadge.text }}</van-tag
+          :text-color="itemData?.priceTipBadge.color"
+          >{{ itemData?.priceTipBadge.text }}</van-tag
         >
       </div>
-      <div v-if="itemData.promoContent" class="footer">
+      <div v-if="itemData?.promoContent" class="footer">
         <van-tag round color="transparent" text-color="#f66">{{
-          itemData.promoContent
+          itemData?.promoContent
         }}</van-tag>
       </div>
     </div>
@@ -107,7 +107,7 @@ defineProps({
       right: 10px;
 
       .msg-tip {
-        display: flex;
+        display: inline-flex;
         max-width: 55%;
         padding-left: 6px;
         background-color: hsla(0, 0%, 100%, 0.9);
@@ -171,6 +171,19 @@ defineProps({
       align-items: center;
       margin-bottom: 10px;
       color: #666;
+      .info-tag {
+        background-color: #3f4954;
+        color: #fff;
+        font-size: 13px;
+        border-radius: 4px;
+        padding: 2px 4px;
+        max-width: 50%;
+        overflow: hidden;
+        /*文本不会换行*/
+        white-space: nowrap;
+        /*当文本溢出包含元素时，以省略号表示超出的文本*/
+        text-overflow: ellipsis;
+      }
       .name {
         position: relative;
         margin: 0 8px;
