@@ -29,13 +29,26 @@ const props = defineProps({
   keyword:{
     type: String,
     default: ''
+  },
+  showCancelIcon:{
+    type: Boolean,
+    default: false
+  },
+  cityName: {
+    type: String,
+    default: '广州'
   }
 })
 
-const emit = defineEmits(['handleSearchClick'])
+const emit = defineEmits(['searchClick', 'cancelClick'])
 
 const handleSearchClick = () => {
   emit('searchClick')
+}
+
+// 取消图片的点击
+const handleCancleClick = () => {
+  emit('cancelClick')
 }
 </script>
 
@@ -43,7 +56,7 @@ const handleSearchClick = () => {
   <div class="search">
     <div class="left" v-if="title">
       <slot name="left">
-        <span>广州</span>
+        <span>{{ cityName }}</span>
       </slot>
     </div>
     <div class="select-time">
@@ -59,6 +72,9 @@ const handleSearchClick = () => {
     <div class="content" @click="handleSearchClick">
       <slot name="content">
         <div class="keyword">{{ keyword }}</div>
+        <!-- .stop阻止冒泡事件，不让当前元素的事件继续往外触发 -->
+        <i class="icon-cancel" @click.stop="handleCancleClick" 
+        v-if="showCancelIcon"></i>
       </slot>
     </div>
     <div class="right">
@@ -123,17 +139,17 @@ const handleSearchClick = () => {
       font-size: 12px;
     }
 
-    // .icon-cancel {
-    //   position: absolute;
-    //   top: 30%;
-    //   right: 0;
-    //   display: inline-block;
-    //   background-image: url('../../assets/img/sprite.png');
-    //   background-position: -92px -58.5px;
-    //   width: 14.5px;
-    //   height: 14.5px;
-    //   background-size: 125px 110px;
-    // }
+    .icon-cancel {
+      position: absolute;
+      top: 30%;
+      right: 0;
+      display: inline-block;
+      background-image: url('../../assets/img/sprite.png');
+      background-position: -92px -58.5px;
+      width: 14.5px;
+      height: 14.5px;
+      background-size: 125px 110px;
+    }
   }
 }
 </style>

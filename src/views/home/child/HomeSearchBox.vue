@@ -60,6 +60,16 @@ const onConfirm = (values) => {
 const homeStore = useHome();
 const { hotSuggest } = storeToRefs(homeStore);
 
+const suggestClick = (item) => {
+  // console.log(item.tagText.text)
+  router.push({
+    path: '/search',
+    query: {
+      keyword: item.tagText.text
+    }
+  })
+}
+
 const searchBtnClick = () => {
   router.push({
     path: "/search",
@@ -122,6 +132,7 @@ defineExpose({
             background: item.tagText.background.color,
             color: item.tagText.color,
           }"
+          @click="suggestClick(item)"
         >
           {{ item.tagText.text }}
         </div>

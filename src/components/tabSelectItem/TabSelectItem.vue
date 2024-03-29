@@ -7,6 +7,10 @@ const props = defineProps({
   active:{
     type: Boolean,
     default: false
+  },
+  type:{
+    type: String,
+    default: 'default' // default / primary / pink / gray
   }
 })
 
@@ -17,7 +21,8 @@ const handleItemClick = () => {
 </script>
 
 <template>
-  <div :class="['tab-select-item', active ? 'active' : '']" @click="handleItemClick">
+  <div :class="['tab-select-item', type, active ? 'active' : '']"
+   @click="handleItemClick">
     {{ label }}
   </div>
 </template>
@@ -35,7 +40,33 @@ const handleItemClick = () => {
   border: 1px solid #f2f3f5;
 }
 
-.active{
+
+
+.tab-select-item.active,
+.tab-select-item.primary {
   color: var(--primary-color);
+  &::before {
+    // border-top: v-bind("props.borderWidth") solid var(--primary-color);
+    // border-right: v-bind("props.borderWidth") solid var(--primary-color);
+    // border-bottom: v-bind("props.borderWidth") solid var(--primary-color);
+    // border-left: v-bind("props.borderWidth") solid var(--primary-color);
+
+    border: 1px solid var(--primary-color);
+  }
+}
+
+.tab-select-item.pink {
+  color: #333;
+  background-color: #fff4ec;
+  padding: 0px 12px;
+  margin-bottom: 6px;
+  margin-left: 5px;
+}
+.tab-select-item.gray {
+  color: #333;
+  background-color: rgb(240, 243, 246);
+  padding: 0px 12px;
+  margin-bottom: 6px;
+  margin-left: 10px;
 }
 </style>
